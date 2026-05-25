@@ -97,9 +97,9 @@ with col1:
     st.subheader("查詢輸入")
     st.markdown("**範例問題**")
     examples = [
-        "銀行在什麼情況下可以暫停帳戶？",
-        "KYC需蒐集哪些資料？",
-        "可疑交易申報時限為何？",
+        "銀行在什麼情況下可以暫停客戶帳戶功能？",
+        "洗錢防制法對受益所有人的定義為何？",
+        "金管會是否規定信用卡利率不得超過3%？",
     ]
     for ex in examples:
         if st.button(ex, key=f"ex_{ex}", use_container_width=True):
