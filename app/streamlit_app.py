@@ -87,6 +87,7 @@ with st.sidebar:
     project = os.getenv("LANGCHAIN_PROJECT", "finllm-kgi-demo")
     st.markdown(f"[LangSmith 專案連結](https://smith.langchain.com)")
     st.caption(f"專案：{project}")
+    st.markdown("[GitHub 原始碼](https://github.com/JoeyTaipei/finllm_rag)")
 
 # ---------------------------------------------------------------------------
 # Main layout

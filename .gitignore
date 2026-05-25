@@ -3,6 +3,7 @@
 __pycache__/
 *.pyc
 .chroma/
-outputs/
+outputs/*
+!outputs/eval_results.csv
 .pytest_cache/
 .claude/
