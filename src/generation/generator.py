@@ -77,17 +77,29 @@ def _parse_to_answer(json_str: str | None, query: str) -> FinLLMAnswer:
 
 
 def _build_retriever() -> HybridRetriever:
+    from src.ingestion.pdf_loader import load_and_index
+
     embedding = HuggingFaceEmbeddings(model_name=EMBED_MODEL)
-    store = Chroma(
-        collection_name=COLLECTION,
-        persist_directory=str(CHROMA_DIR),
-        embedding_function=embedding,
-    )
-    raw = store.get(include=["documents", "metadatas"])
-    documents = [
-        Document(page_content=text, metadata=meta or {})
-        for text, meta in zip(raw["documents"], raw["metadatas"])
-    ]
+    documents: list[Document] = []
+    store = None
+
+    if CHROMA_DIR.exists():
+        store = Chroma(
+            collection_name=COLLECTION,
+            persist_directory=str(CHROMA_DIR),
+            embedding_function=embedding,
+        )
+        raw = store.get(include=["documents", "metadatas"])
+        documents = [
+            Document(page_content=text, metadata=meta or {})
+            for text, meta in zip(raw["documents"], raw["metadatas"])
+        ]
+
+    if not documents:
+        # Cold start: .chroma/ absent or empty (e.g. Streamlit Cloud).
+        # Build index from the committed PDFs in data/raw_pdfs/.
+        documents, store = load_and_index(chroma_dir=CHROMA_DIR)
+
     return HybridRetriever(store, documents, top_k=20)
 
 
