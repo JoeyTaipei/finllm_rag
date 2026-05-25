@@ -1,0 +1,14 @@
+﻿langchain
+langchain-anthropic
+langchain-community
+langsmith
+chromadb
+sentence-transformers
+rank-bm25
+streamlit
+pydantic
+python-dotenv
+pypdf
+jieba
+pytest
+pandas
