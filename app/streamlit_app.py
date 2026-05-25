@@ -1,14 +1,19 @@
 from __future__ import annotations
 
 import os
+import sys
 from pathlib import Path
 
 import pandas as pd
 import streamlit as st
 from dotenv import load_dotenv
 
-# Ensure CWD is project root so relative paths (ChromaDB, outputs/) resolve correctly
-os.chdir(Path(__file__).parent.parent)
+# Ensure project root is on sys.path (required on Streamlit Cloud)
+# and set as CWD so relative paths (ChromaDB, outputs/) resolve correctly
+_ROOT = Path(__file__).parent.parent
+if str(_ROOT) not in sys.path:
+    sys.path.insert(0, str(_ROOT))
+os.chdir(_ROOT)
 
 load_dotenv(encoding="utf-8-sig")
 
